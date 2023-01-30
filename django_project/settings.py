@@ -25,7 +25,7 @@ SECRET_KEY = 'ff4(44m^-+bveu0jnu)#&%b($0&!th03aio47xo4wuk*zy=+m#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [".herokuapp.com", "localhost", "127.0.0.1"]
 
 
 # Application definition
@@ -36,14 +36,20 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
+    # local
     'books',
+    # 3rd party
+    'rest_framework',
+    'whitenoise',
 
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -120,3 +126,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [str(BASE_DIR.joinpath("static"))]
+STATIC_ROOT = str(BASE_DIR.joinpath("staticfiles"))  # new
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"  # new
+
